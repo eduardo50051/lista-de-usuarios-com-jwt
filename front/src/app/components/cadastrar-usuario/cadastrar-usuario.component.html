@@ -1,0 +1,58 @@
+<form #form="ngForm">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modalCriarUsuarioLabel">Criar Usuário</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Fechar"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="nome" name="nome" required />
+    </div>
+    <div class="mb-3">
+      <label for="emailCadastro" class="form-label">E-mail</label>
+      <input
+        type="email"
+        class="form-control"
+        id="emailCadastro"
+        name="email"
+        [(ngModel)]="email"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="senhaCadastro" class="form-label">Senha</label>
+      <input
+        type="text"
+        class="form-control"
+        id="senhaCadastro"
+        name="senha"
+        [(ngModel)]="senha"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+      <input
+        type="text"
+        class="form-control"
+        id="confirmarSenha"
+        name="confirmarSenha"
+        [(ngModel)]="confirmarSenha"
+        required
+      />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+      Cancelar
+    </button>
+    <button (click)="ciarUsuario()" type="submit" class="btn btn-success">
+      Criar
+    </button>
+  </div>
+</form>

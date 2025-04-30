@@ -16,11 +16,13 @@ export class UsuariosController {
     }
 
     @Get()
+    @UseGuards(AuthGuard('jwt'))
     listarUsuarios(): Promise<Usuario[]>{
         return this.usuarioService.listarUsuarios();
     }
 
     @Get('/:id')
+    @UseGuards(AuthGuard('jwt'))
     async listarUsuarioPorId(@Param('id') id: string): Promise<Usuario | null> {
         return this.usuarioService.listarUsuarioPorId({ id: Number(id)});
     }
@@ -35,6 +37,7 @@ export class UsuariosController {
     }
 
     @Delete('/:id')
+    @UseGuards(AuthGuard('jwt'))
     async deletarUsuario(@Param('id') id: number): Promise<Usuario>{
         return this.usuarioService.deletarUsuario({id});
     }

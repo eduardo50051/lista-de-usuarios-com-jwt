@@ -1,0 +1,22 @@
+<table id="tabelaUsuarios" class="table table-striped">
+  <thead>
+    <tr>
+      <th>editar</th>
+      <th>e-mail</th>
+      <th>nome</th>
+      <th>usuario criado em</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarios">
+      <td>
+        <a [routerLink]="['/editar-usuario', usuario.id]">
+          <i class="bi bi-pencil-square"></i>
+        </a>
+      </td>
+      <td>{{ usuario.email }}</td>
+      <td>{{ usuario.nome || "adicione seu nome" }}</td>
+      <td>{{ usuario.criado_em | date : "short" }}</td>
+    </tr>
+  </tbody>
+</table>

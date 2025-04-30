@@ -1,0 +1,26 @@
+<div class="container-fluid vh-100">
+  <div class="row h-100">
+    <div
+      class="col-md-3 bg-light border-start p-4 d-flex flex-column justify-content-between"
+    >
+      <div>
+        <h5>Bem-vindo</h5>
+      </div>
+
+      <div>
+        <button
+          class="btn btn-primary mt-auto"
+          [routerLink]="['/listar-usuarios']"
+        >
+          lista de usuarios
+        </button>
+      </div>
+
+      <button (click)="Sair()" class="btn btn-danger mt-auto">Sair</button>
+    </div>
+
+    <div class="col-md-9 p-4 overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
