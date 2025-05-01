@@ -1,71 +1,90 @@
 <div *ngIf="usuario">
-  <div class="container py-5">
-    <h3 class="text-center mb-4">editar usuario</h3>
+  <div class="card shadow-lg py-3">
+    <div class="card-header text-center">
+      <h3>Editar Usuário</h3>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input
+            type="text"
+            id="nome"
+            class="form-control"
+            [(ngModel)]="usuario.nome"
+            name="nome"
+            placeholder="Digite o nome"
+          />
+        </div>
 
-    <form>
-      <div class="mb-3">
-        <label for="nome" class="form-label">nome</label>
-        <input
-          type="text"
-          id="nome"
-          class="form-control"
-          [(ngModel)]="usuario.nome"
-          name="nome"
-          placeholder="Digite o nome"
-        />
-      </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            [(ngModel)]="usuario.email"
+            name="email"
+            placeholder="Digite o e-mail"
+          />
+        </div>
 
-      <div class="mb-3">
-        <label for="email" class="form-label">e-mail</label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          [(ngModel)]="usuario.email"
-          name="email"
-          placeholder="Digite o e-mail"
-        />
-      </div>
+        <div class="mb-3">
+          <label for="senha" class="form-label">Nova senha</label>
+          <input
+            type="text"
+            id="senha"
+            class="form-control"
+            [(ngModel)]="novaSenha"
+            name="novaSenha"
+            placeholder="Digite a nova senha (opcional)"
+          />
+        </div>
 
-      <div class="mb-3">
-        <label for="senha" class="form-label">Nova senha</label>
-        <input
-          type="text"
-          id="senha"
-          class="form-control"
-          [(ngModel)]="novaSenha"
-          name="novaSenha"
-          placeholder="Digite a nova senha (opcional)"
-        />
-      </div>
+        <div class="mb-3">
+          <label for="criado_em" class="form-label">Usuário criado em</label>
+          <input
+            type="text"
+            id="criado_em"
+            class="form-control"
+            [value]="usuario.criado_em | date : 'short'"
+            disabled
+          />
+        </div>
+      </form>
+    </div>
 
-      <div class="mb-3">
-        <label for="criado_em" class="form-label">usuario criado em</label>
-        <input
-          type="text"
-          id="criado_em"
-          class="form-control"
-          [value]="usuario.criado_em | date : 'short'"
-          disabled
-        />
-      </div>
-
-      <div class="d-grid gap-2">
+  
+    <div class="card-footer d-flex justify-content-between">
+      <div>
+       
         <button
           (click)="atualizarUsuario()"
-          type="submit"
-          class="btn btn-primary"
+          type="button"
+          class="btn btn-success"
         >
-          atualizar
+          <i class="fa fa-save"></i> Gravar
         </button>
+    
         <button
-          (click)="deletarUsuario()"
-          type="submit"
-          class="btn btn-primary"
+          [routerLink]="['/listar-usuarios']"
+          type="button"
+          class="btn btn-secondary ms-2"
         >
-          excluir
+          <i class="fa fa-arrow-left"></i> Voltar
         </button>
       </div>
-    </form>
+    
+ 
+      <button
+        (click)="deletarUsuario()"
+        type="button"
+        class="btn btn-danger"
+      >
+        <i class="fa fa-trash"></i> Excluir
+      </button>
+    </div>
+    
+    
   </div>
 </div>

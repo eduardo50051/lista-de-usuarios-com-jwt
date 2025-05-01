@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from 'src/app/interfaces/IUsuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-editar-ou-criar-usuario',
@@ -10,6 +12,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./editar-ou-criar-usuario.component.scss']
 })
 export class EditarOuCriarUsuarioComponent {
+
+
 
   usuario: IUsuario | null = null;
 
@@ -20,7 +24,8 @@ export class EditarOuCriarUsuarioComponent {
   constructor(
     private route: ActivatedRoute,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -65,11 +70,7 @@ export class EditarOuCriarUsuarioComponent {
       
 
         
-        Swal.fire(
-          'apagado',
-          'usuario apagado',
-          'success'
-        );
+        this.toastr.success('usuario deletado com sucesso');
 
         
         this.router.navigate(['/listar-usuarios']);
@@ -102,6 +103,7 @@ export class EditarOuCriarUsuarioComponent {
   
     try {
       await this.usuarioService.atualizarUsuario(Number(usuarioId), this.usuario);
+      this.toastr.success('usuario atualizado com sucesso');
       this.router.navigate(['/listar-usuarios']);
     } catch (error) {
       console.log(error);

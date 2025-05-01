@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IUsuario } from 'src/app/interfaces/IUsuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 @Component({
   selector: 'app-cadastrar-usuario',
@@ -10,7 +13,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class CadastrarUsuarioComponent {
 
-  constructor(private usuarioService: UsuarioService, private router: Router) {}
+  constructor(private usuarioService: UsuarioService, private router: Router, private toastr: ToastrService) {}
 
   email: string = '';
   senha: string = '';
@@ -19,7 +22,7 @@ export class CadastrarUsuarioComponent {
   async ciarUsuario() {
    
     if (this.senha !== this.confirmarSenha) {
-      alert('As senhas não são iguais');
+      this.toastr.error('as senhas nao sao iguais');
       return;
     }
  
@@ -30,15 +33,21 @@ export class CadastrarUsuarioComponent {
     };
   
     try {
-      
       const usuarioCriado = await this.usuarioService.criarUsuario(novoUsuario);
       console.log(usuarioCriado);
-     
-
+      
+      this.toastr.success('usuario');
       this.router.navigate(['/listar-usuarios']);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      
+      
+      const mensagemErro = error?.response?.data?.message || 'erro ao criar usuario';
+      this.toastr.error(mensagemErro, 'Erro');
     }
+    
+    
+    
+    
   }
 
 

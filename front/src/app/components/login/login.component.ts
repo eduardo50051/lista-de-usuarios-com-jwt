@@ -3,6 +3,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { ILogin } from 'src/app/interfaces/Ilogin';
 import { Router } from '@angular/router';
 import { IUsuario } from 'src/app/interfaces/IUsuario';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent {
   
 
 
-constructor (private usuarioService: UsuarioService, private router:Router){}
+constructor (private usuarioService: UsuarioService, private router:Router, public toastr: ToastrService){}
 
 async Entrar(){
   try{
