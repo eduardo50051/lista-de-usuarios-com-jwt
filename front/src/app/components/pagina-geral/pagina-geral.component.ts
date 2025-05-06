@@ -17,6 +17,7 @@ usuario: IUsuario = {
   senha: '',
   nome: '',
   criado_em: new Date,
+  
 };
 
     Sair(): void{

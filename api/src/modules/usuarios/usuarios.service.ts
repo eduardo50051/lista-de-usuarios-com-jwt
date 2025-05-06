@@ -49,26 +49,31 @@ export class UsuariosService {
         }
     }
 
-    async listarUsuarioPorId(usuarioWhereUniqueInput: Prisma.UsuarioWhereUniqueInput): Promise<Usuario> {
+    async listarUsuarioPorId(
+        usuarioWhereUniqueInput: Prisma.UsuarioWhereUniqueInput
+      ): Promise<Prisma.UsuarioGetPayload<{ include: { tipoUsuario: true } }>> {
         console.log('Buscando usuário com:', usuarioWhereUniqueInput);
-
+      
         try {
-            const usuario = await this.prisma.usuario.findUnique({
-                where: usuarioWhereUniqueInput,
-            });
-
-            if (!usuario) {
-                console.warn('Usuário não encontrado:', usuarioWhereUniqueInput);
-                throw new NotFoundException('Usuário não existe');
-            }
-
-            console.log('Usuário encontrado:', usuario);
-            return usuario;
+          const usuario = await this.prisma.usuario.findUnique({
+            where: usuarioWhereUniqueInput,
+            include: {
+              tipoUsuario: true,
+            },
+          });
+      
+          if (!usuario) {
+            console.warn('Usuário não encontrado:', usuarioWhereUniqueInput);
+            throw new NotFoundException('Usuário não existe');
+          }
+      
+          console.log('Usuário encontrado:', usuario);
+          return usuario;
         } catch (error) {
-            console.error('Erro ao buscar usuário:', error);
-            throw error;
+          console.error('Erro ao buscar usuário:', error);
+          throw error;
         }
-    }
+      }
 
     async atualizarUsuario(params: { where: Prisma.UsuarioWhereUniqueInput; data: AtualizarUsuarioDto }): Promise<Usuario> {
         const { data, where } = params;

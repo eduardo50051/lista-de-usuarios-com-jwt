@@ -8,10 +8,22 @@ datasource db {
 }
 
 model Usuario {
-  id         Int      @id @default(autoincrement()) 
-  email      String   @unique                      
-  senha      String                                
-  nome       String?                              
-  criado_em  DateTime @default(now())              
+  id             Int          @id @default(autoincrement())
+  email          String       @unique
+  senha          String
+  nome           String?
+  criado_em      DateTime     @default(now())
+  tipoUsuarioId  Int?
+  tipoUsuario    TipoUsuario? @relation(fields: [tipoUsuarioId], references: [id])
 }
+
+model TipoUsuario {
+  id       Int       @id @default(autoincrement())
+  nome     String    @unique
+  usuarios Usuario[]
+}
+
+
+
+
 

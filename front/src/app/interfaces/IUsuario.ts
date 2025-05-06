@@ -4,4 +4,5 @@ export interface IUsuario {
     senha?: string;
     nome?: string;
     criado_em?: Date;
+    tipo?: number;
 }

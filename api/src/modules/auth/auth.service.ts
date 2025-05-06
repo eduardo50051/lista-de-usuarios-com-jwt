@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
 
+
 @Injectable()
 export class AuthService {
 
@@ -32,6 +33,7 @@ export class AuthService {
               id: usuario.id,
               email: usuario.email,
               nome: usuario.nome,
+              tipo: usuario.tipoUsuario?.nome,
             },
         };
 
