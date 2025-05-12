@@ -27,6 +27,7 @@ export class UsuariosService {
                 data: {
                     ...data,
                     senha: senhaEncriptada,
+                    
                 },
             });
 

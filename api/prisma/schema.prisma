@@ -8,13 +8,14 @@ datasource db {
 }
 
 model Usuario {
-  id             Int          @id @default(autoincrement())
-  email          String       @unique
+  id             Int             @id @default(autoincrement())
+  email          String          @unique
   senha          String
   nome           String?
-  criado_em      DateTime     @default(now())
+  criado_em      DateTime        @default(now())
   tipoUsuarioId  Int?
-  tipoUsuario    TipoUsuario? @relation(fields: [tipoUsuarioId], references: [id])
+  tipoUsuario    TipoUsuario?    @relation(fields: [tipoUsuarioId], references: [id])
+  participacoes  Participacao[]  
 }
 
 model TipoUsuario {
@@ -23,7 +24,20 @@ model TipoUsuario {
   usuarios Usuario[]
 }
 
+model Evento {
+  id           Int             @id @default(autoincrement())
+  nome         String
+  descricao    String
+  data         DateTime
+  participacoes Participacao[] 
+}
 
+model Participacao {
+  id        Int      @id @default(autoincrement())
+  evento    Evento   @relation(fields: [eventoId], references: [id])
+  eventoId  Int
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
 
-
-
+  @@unique([eventoId, usuarioId]) 
+}

@@ -30,7 +30,7 @@ export class CadastrarUsuarioComponent {
     const novoUsuario: IUsuario = {
       email: this.email,
       senha: this.senha,
-      tipo: 2,
+      tipoUsuarioId: 2,
     };
   
     try {
