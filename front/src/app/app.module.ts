@@ -12,6 +12,8 @@ import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
+import { EventoEditarCriarComponent } from './components/evento-editar-criar/evento-editar-criar.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ToastrModule } from 'ngx-toastr';
     EditarOuCriarUsuarioComponent,
     CadastrarUsuarioComponent,
     PaginaGeralComponent,
-    HomeComponent
+    HomeComponent,
+    EventoListarComponent,
+    EventoEditarCriarComponent
   ],
   imports: [
     BrowserModule,

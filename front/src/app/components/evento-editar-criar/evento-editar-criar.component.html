@@ -1,0 +1,81 @@
+<div *ngIf="evento" class="container mt-4">
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Nome:</label>
+        <input [(ngModel)]="evento.nome" type="text" class="form-control" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Descrição:</label>
+        <textarea
+          [(ngModel)]="evento.descricao"
+          class="form-control"
+        ></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Data:</label>
+        <input [(ngModel)]="dataFormatada" type="date" class="form-control" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">Participantes</h5>
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-bordered table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Selecionar</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <ng-container *ngIf="usuario.id != null">
+              <td class="text-center">
+                <input
+                  type="checkbox"
+                  [checked]="participantesSelecionados.has(usuario.id!)"
+                  (change)="selecionarParticipantes(usuario.id!)"
+                />
+              </td>
+              <td>{{ usuario.nome || "Sem nome" }}</td>
+              <td>{{ usuario.email }}</td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="text-end mt-4">
+    <button
+      *ngIf="evento && evento.id >= 1"
+      (click)="salvarEvento()"
+      class="btn btn-primary"
+    >
+      Salvar
+    </button>
+
+    <button
+      *ngIf="evento && evento.id >= 1"
+      (click)="excluirEvento()"
+      class="btn btn-danger"
+    >
+      Excluir
+    </button>
+
+    <button
+      *ngIf="evento?.id === 0"
+      class="btn btn-success"
+      (click)="criarEvento()"
+    >
+      Criar
+    </button>
+  </div>
+</div>

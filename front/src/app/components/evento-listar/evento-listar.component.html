@@ -1,0 +1,72 @@
+<!-- Lista de cards -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-3" *ngFor="let evento of eventos">
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ evento.nome }}</h5>
+          <p class="card-text flex-grow-1">{{ evento.descricao }}</p>
+          <p class="card-text">
+            <small class="text-muted">Data: {{ evento.dataFormatada }}</small>
+          </p>
+
+          <div class="mt-auto d-flex justify-content-between">
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="abrirModalParticipantes(evento)"
+            >
+              Detalhes
+            </button>
+            <button
+              [routerLink]="['/editar-evento', evento.id]"
+              class="btn btn-secondary btn-sm"
+            >
+              Editar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Bootstrap para participantes -->
+<div
+  class="modal fade"
+  id="participantesModal"
+  tabindex="-1"
+  aria-labelledby="participantesModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="participantesModalLabel">
+          Participantes do Evento
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Fechar"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of participantesModal">
+              <td>{{ p.usuario.nome }}</td>
+              <td>{{ p.usuario.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -89,26 +89,31 @@ export class EditarOuCriarUsuarioComponent {
 
 
 
-  async atualizarUsuario(): Promise<void> {
-    const usuarioId = this.route.snapshot.paramMap.get('id'); 
-    if (!usuarioId || !this.usuario) return;
-  
-  
-    if (this.novaSenha) {
-      this.usuario.senha = this.novaSenha;
-    } else {
-      
-      delete this.usuario.senha;
-    }
-  
-    try {
-      await this.usuarioService.atualizarUsuario(Number(usuarioId), this.usuario);
-      this.toastr.success('usuario atualizado com sucesso');
-      this.router.navigate(['/listar-usuarios']);
-    } catch (error) {
-      console.log(error);
-    }
+async atualizarUsuario(): Promise<void> {
+  const usuarioId = this.route.snapshot.paramMap.get('id'); 
+  if (!usuarioId || !this.usuario) return;
+
+  const dadosAtualizados: any = {
+    nome: this.usuario.nome,
+    email: this.usuario.email,
+    tipoUsuarioId: this.usuario.tipoUsuarioId,
+   
+  };
+
+  if (this.novaSenha) {
+    dadosAtualizados.senha = this.novaSenha;
   }
+
+  try {
+    await this.usuarioService.atualizarUsuario(Number(usuarioId), dadosAtualizados);
+    this.toastr.success('Usuário atualizado com sucesso');
+    this.router.navigate(['/listar-usuarios']);
+  } catch (error) {
+    console.error(error);
+    this.toastr.error('Erro ao atualizar o usuário');
+  }
+}
+
   
 
 

@@ -6,6 +6,8 @@ import { PaginaGeralComponent } from './components/pagina-geral/pagina-geral.com
 import { HomeComponent } from './components/home/home.component';
 import { ListarUsuariosComponent } from './components/listar-usuarios/listar-usuarios.component';
 import { EditarOuCriarUsuarioComponent } from './components/editar-ou-criar-usuario/editar-ou-criar-usuario.component';
+import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
+import { EventoEditarCriarComponent } from './components/evento-editar-criar/evento-editar-criar.component';
 
 const routes: Routes = [
 
@@ -30,6 +32,14 @@ const routes: Routes = [
     {
       path: 'editar-usuario/:id',
       component: EditarOuCriarUsuarioComponent
+    },
+    {
+      path: 'listar-eventos',
+      component: EventoListarComponent
+    },
+     {
+      path: 'editar-evento/:id',
+      component: EventoEditarCriarComponent
     },
   ]
 },

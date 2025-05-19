@@ -33,11 +33,15 @@ model Evento {
 }
 
 model Participacao {
-  id        Int      @id @default(autoincrement())
-  evento    Evento   @relation(fields: [eventoId], references: [id])
-  eventoId  Int
-  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
-  usuarioId Int
+  id         Int     @id @default(autoincrement())
+  evento     Evento  @relation(fields: [eventoId], references: [id], onDelete: Cascade)
+  eventoId   Int
+  usuario    Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId  Int
 
-  @@unique([eventoId, usuarioId]) 
+  observacao String?  
+  
+
+  @@unique([eventoId, usuarioId])
 }
+

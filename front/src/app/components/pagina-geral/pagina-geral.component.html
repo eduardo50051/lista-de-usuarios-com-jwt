@@ -1,41 +1,54 @@
 <div class="container-fluid vh-100">
   <div class="row h-100">
     <div
-      class="col-md-3 bg-light border-start p-4 d-flex flex-column justify-content-between" style="box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22) !important;background: #f4f6f9; "
+      class="col-md-2 bg-light border-start p-4 d-flex flex-column justify-content-between"
+      style="
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+          0 10px 10px rgba(0, 0, 0, 0.22) !important;
+        background: #f4f6f9;
+      "
     >
       <div>
         <h5>Bem-vindo</h5>
       </div>
 
       <div>
-
         <ul>
           <li>
-            <a  [routerLink]="['/home']">
+            <a [routerLink]="['/home']">
               <i class="fa fa-home"></i>
 
               <p>Home</p>
             </a>
           </li>
-        
+
           <li>
-            <a  [routerLink]="['/listar-usuarios']">
+            <a [routerLink]="['/listar-usuarios']">
               <i class="fa fa-list-ul"></i>
-              <p>List</p>
+              <p>Lista</p>
+            </a>
+          </li>
+
+          <li>
+            <a [routerLink]="['/listar-eventos']">
+              <i class="fa fa-calendar"></i>
+              <p>Eventos</p>
+            </a>
+          </li>
+
+          <li>
+            <a [routerLink]="['/editar-evento/0']">
+              <i class="fa fa-calendar"></i>
+              <p>Cadastrar Evento</p>
             </a>
           </li>
         </ul>
-        
-
-
-
-      
       </div>
 
       <button (click)="Sair()" class="btn btn-danger mt-auto">Sair</button>
     </div>
 
-    <div class="col-md-9 p-4 overflow-auto">
+    <div class="col-md-10 p-4 overflow-auto">
       <router-outlet></router-outlet>
     </div>
   </div>
