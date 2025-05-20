@@ -45,4 +45,22 @@ async listarEventoPorId(id: number): Promise<IEventoDetalhado> {
   async deletarEvento(id: number): Promise<void> {
     await this.axiosInstance.delete(`/eventos/${id}`);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 }

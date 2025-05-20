@@ -74,15 +74,17 @@ export class EditarOuCriarUsuarioComponent {
 
         
         this.router.navigate(['/listar-usuarios']);
-      } catch (error) {
-        console.error(error);
+      } catch (error: any) {
+  console.error('Erro ao excluir:', error);
 
-        Swal.fire(
-          'erro',
-          'nao foi possivel excluir o usuario',
-          'error'
-        );
-      }
+  const mensagemErro = error.message || 'Erro ao excluir o usuário.';
+
+  
+  // this.toastr.error(mensagemErro, 'Erro');
+
+   
+   Swal.fire('Erro', mensagemErro, 'error');
+}
     }
   }
 

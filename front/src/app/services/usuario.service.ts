@@ -69,15 +69,20 @@ export class UsuarioService {
     return response.data;
   }
   
-  async deletarUsuario(id: number): Promise<void> {
-    try {
-      await this.axiosInstance.delete(`/usuarios/${id}`);
-     
-    } catch (error) {
-      console.error(error);
-      throw error;  
+ async deletarUsuario(id: number): Promise<void> {
+  try {
+    await this.axiosInstance.delete(`/usuarios/${id}`);
+  } catch (error: any) {
+    if (error.response && error.response.data && error.response.data.message) {
+      console.error('Erro ao deletar usuário:', error.response.data.message);
+      throw new Error(error.response.data.message); 
+    } else {
+      console.error('Erro desconhecido ao deletar usuário:', error);
+      throw new Error('Erro ao deletar usuário. Tente novamente mais tarde.');
     }
   }
+}
+
 
 
  

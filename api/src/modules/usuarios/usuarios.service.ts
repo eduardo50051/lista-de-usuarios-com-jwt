@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
 import { Prisma, Usuario } from '@prisma/client';
 import { AtualizarUsuarioDto } from 'src/dto/atualizar-usuario.dto';
 import { CriarUsuarioDto } from 'src/dto/criar-usuario.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class UsuariosService {
@@ -105,27 +106,38 @@ export class UsuariosService {
         }
     }
 
-    async deletarUsuario(where: Prisma.UsuarioWhereUniqueInput): Promise<Usuario> {
-        console.log(where);
+ async deletarUsuario(where: Prisma.UsuarioWhereUniqueInput): Promise<Usuario> {
+    console.log('Tentando deletar usuário:', where);
 
-        try {
-
-            if (where.id && typeof where.id === 'string'){
-                where.id = parseInt(where.id, 10);
-            }
-
-            const usuario = await this.prisma.usuario.findUnique({ where });
-            if (!usuario) {
-                console.warn('Usuário para exclusão não encontrado:', where);
-                throw new NotFoundException('Usuário não existe');
-            }
-
-            const usuarioDeletado = await this.prisma.usuario.delete({ where });
-            console.log('Usuário deletado com sucesso:', usuarioDeletado);
-            return usuarioDeletado;
-        } catch (error) {
-            console.error('Erro ao deletar usuário:', error);
-            throw error;
+    try {
+        
+        if (where.id && typeof where.id === 'string') {
+            where.id = parseInt(where.id, 10);
         }
+
+        const usuario = await this.prisma.usuario.findUnique({ where });
+
+        if (!usuario) {
+            console.warn('Usuário para exclusão não encontrado:', where);
+            throw new NotFoundException('Usuário não existe');
+        }
+
+        const usuarioDeletado = await this.prisma.usuario.delete({ where });
+        console.log('Usuário deletado com sucesso:', usuarioDeletado);
+        return usuarioDeletado;
+    } catch (error) {
+        if (
+            error instanceof PrismaClientKnownRequestError &&
+            error.code === 'P2003'
+        ) {
+            console.warn('Erro de integridade referencial: usuário atrelado a outra entidade');
+            throw new BadRequestException(
+                'Não é possível excluir o usuário porque ele está atrelado a um evento.'
+            );
+        }
+
+        console.error('Erro inesperado ao deletar usuário:', error);
+        throw error;
     }
+}
 }
