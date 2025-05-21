@@ -9,6 +9,7 @@ export interface IParticipacao {
   id: number;
   eventoId: number;
   usuarioId: number;
+  observacao?: string;
   usuario?: IUsuario;
 }
 

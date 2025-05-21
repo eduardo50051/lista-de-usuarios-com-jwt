@@ -21,6 +21,9 @@ export class EventoEditarCriarComponent implements OnInit{
   usuarios: IUsuario[] = [];
   participantesSelecionados: Set<number> = new Set();
 
+observacoesMap: Map<number, string> = new Map();
+
+
   constructor(private eventosService: EventosService, private usuarioService: UsuarioService, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {}
 
 async ngOnInit() {
@@ -30,26 +33,26 @@ async ngOnInit() {
   this.usuarios = await this.usuarioService.listarTodos();
 
 
-  if (eventoId && eventoId !== '0') {
-    const id = Number(eventoId);
-    this.evento = await this.eventosService.listarEventoPorId(id);
+if (eventoId && eventoId !== '0') {
+  const id = Number(eventoId);
+  this.evento = await this.eventosService.listarEventoPorId(id);
 
- 
-    this.evento.participacoes.forEach(part => {
-      this.participantesSelecionados.add(part.usuarioId);
-    });
+  this.evento.participacoes.forEach(part => {
+    this.participantesSelecionados.add(part.usuarioId);
+    this.observacoesMap.set(part.usuarioId, part.observacao || '');
+  });
+} else {
+  this.evento = {
+    id: 0,
+    nome: '',
+    descricao: '',
+    data: '',
+    participacoes: []
+  };
+  this.participantesSelecionados.clear();
+  this.observacoesMap.clear(); 
+}
 
-  } else {
-    
-    this.evento = {
-      id: 0,
-      nome: '',
-      descricao: '',
-      data: '',
-      participacoes: []
-    };
-    this.participantesSelecionados.clear();
-  }
 }
 
 
@@ -91,13 +94,15 @@ async criarEvento() {
       nome: this.evento.nome,
       descricao: this.evento.descricao,
       data: this.evento.data,
-      participantesIds: Array.from(this.participantesSelecionados),
+      participantes: Array.from(this.participantesSelecionados).map(id => ({
+        id,
+        observacao: this.observacoesMap.get(id) || ''
+      }))
     };
 
     try {
-      const novoEvento = await this.eventosService.criarEvento(payload);
+      await this.eventosService.criarEvento(payload);
       alert('Evento criado com sucesso!');
-    
       this.router.navigate(['/listar-eventos']);
     } catch (error) {
       console.error('Erro ao criar evento:', error);
@@ -107,28 +112,47 @@ async criarEvento() {
 }
 
 
+getObservacao(usuarioId: number): string {
+  return this.observacoesMap.get(usuarioId) || '';
+}
+
+setObservacao(usuarioId: number, valor: string): void {
+  this.observacoesMap.set(usuarioId, valor);
+}
+
 
 
  selecionarParticipantes(usuarioId: number) {
-    if (this.participantesSelecionados.has(usuarioId)) {
-      this.participantesSelecionados.delete(usuarioId);
-    } else {
-      this.participantesSelecionados.add(usuarioId);
+  if (this.participantesSelecionados.has(usuarioId)) {
+    this.participantesSelecionados.delete(usuarioId);
+    this.observacoesMap.delete(usuarioId); 
+  } else {
+    this.participantesSelecionados.add(usuarioId);
+    if (!this.observacoesMap.has(usuarioId)) {
+      this.observacoesMap.set(usuarioId, '');
     }
   }
+}
 
-  async salvarEvento() {
-    if (this.evento) {
-      await this.eventosService.atualizarEvento(this.evento.id, {
-        nome: this.evento.nome,
-        descricao: this.evento.descricao,
-        data: this.evento.data,
-        participantesIds: Array.from(this.participantesSelecionados),
-      });
 
-      alert('Evento atualizado!');
-    }
+async salvarEvento() {
+  if (this.evento) {
+    await this.eventosService.atualizarEvento(this.evento.id, {
+      nome: this.evento.nome,
+      descricao: this.evento.descricao,
+      data: this.evento.data,
+      participantes: Array.from(this.participantesSelecionados).map(id => ({
+        id,
+        observacao: this.observacoesMap.get(id) || ''
+      }))
+    });
+
+    alert('Evento atualizado!');
+    this.router.navigate(['/listar-eventos']);
   }
+}
+
+
 
 async excluirEvento(): Promise<void> {
   if (this.evento && this.evento.id > 0) {

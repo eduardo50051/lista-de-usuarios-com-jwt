@@ -30,6 +30,7 @@
         <thead class="table-light">
           <tr>
             <th scope="col">Selecionar</th>
+            <th scope="col">Obs</th>
             <th scope="col">Nome</th>
             <th scope="col">Email</th>
           </tr>
@@ -42,6 +43,12 @@
                   type="checkbox"
                   [checked]="participantesSelecionados.has(usuario.id!)"
                   (change)="selecionarParticipantes(usuario.id!)"
+                />
+              </td>
+              <td>
+                <input
+                  [ngModel]="getObservacao(usuario.id)"
+                  (ngModelChange)="setObservacao(usuario.id, $event)"
                 />
               </td>
               <td>{{ usuario.nome || "Sem nome" }}</td>

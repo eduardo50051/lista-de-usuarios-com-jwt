@@ -30,7 +30,6 @@
   </div>
 </div>
 
-<!-- Modal Bootstrap para participantes -->
 <div
   class="modal fade"
   id="participantesModal"
@@ -57,12 +56,14 @@
             <tr>
               <th>Nome</th>
               <th>Email</th>
+              <th>observacoes</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let p of participantesModal">
               <td>{{ p.usuario.nome }}</td>
               <td>{{ p.usuario.email }}</td>
+              <td>{{ p.observacao }}</td>
             </tr>
           </tbody>
         </table>

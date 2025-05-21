@@ -7,25 +7,27 @@ import { AtualizarEventoDto } from 'src/dto/atualizar-evento.dto';
 export class EventosService {
   constructor(private prisma: PrismaService) {}
 
-  async criar(dados: CriarEventoDto) {
-    return this.prisma.evento.create({
-      data: {
-        nome: dados.nome,
-        descricao: dados.descricao,
-        data: new Date(dados.data),
-        participacoes: {
-          create: dados.participantesIds.map(id => ({
-            usuario: { connect: { id } }
-          }))
-        }
-      },
-      include: {
-        participacoes: {
-          include: { usuario: true }
-        }
+ async criar(dados: CriarEventoDto) {
+  return this.prisma.evento.create({
+    data: {
+      nome: dados.nome,
+      descricao: dados.descricao,
+      data: new Date(dados.data),
+      participacoes: {
+        create: dados.participantes.map(p => ({
+          observacao: p.observacao,
+          usuario: { connect: { id: p.id } }
+        }))
       }
-    });
-  }
+    },
+    include: {
+      participacoes: {
+        include: { usuario: true }
+      }
+    }
+  });
+}
+
 
   async listarTodos() {
     return this.prisma.evento.findMany({
@@ -65,28 +67,30 @@ export class EventosService {
   }
 
   async atualizar(id: number, dados: AtualizarEventoDto) {
-    return this.prisma.evento.update({
-      where: { id },
-      data: {
-        nome: dados.nome,
-        descricao: dados.descricao,
-        data: dados.data ? new Date(dados.data) : undefined,
-        participacoes: dados.participantesIds
-          ? {
-              deleteMany: {}, 
-              create: dados.participantesIds.map(id => ({
-                usuario: { connect: { id } }
-              }))
-            }
-          : undefined
-      },
-      include: {
-        participacoes: {
-          include: { usuario: true }
-        }
+  return this.prisma.evento.update({
+    where: { id },
+    data: {
+      nome: dados.nome,
+      descricao: dados.descricao,
+      data: dados.data ? new Date(dados.data) : undefined,
+      participacoes: dados.participantes
+        ? {
+            deleteMany: {},
+            create: dados.participantes.map(p => ({
+              observacao: p.observacao,
+              usuario: { connect: { id: p.id } }
+            }))
+          }
+        : undefined
+    },
+    include: {
+      participacoes: {
+        include: { usuario: true }
       }
-    });
-  }
+    }
+  });
+}
+
 
   async remover(id: number) {
     return this.prisma.evento.delete({
