@@ -16,6 +16,9 @@ model Usuario {
   tipoUsuarioId  Int?
   tipoUsuario    TipoUsuario?    @relation(fields: [tipoUsuarioId], references: [id])
   participacoes  Participacao[]  
+
+  vendasFeitas   Venda[]         @relation("UsuarioVendedor") // vendas em que é o vendedor
+  comprasFeitas  Venda[]         @relation("UsuarioCliente")  // vendas em que é o cliente
 }
 
 model TipoUsuario {
@@ -25,10 +28,10 @@ model TipoUsuario {
 }
 
 model Evento {
-  id           Int             @id @default(autoincrement())
-  nome         String
-  descricao    String
-  data         DateTime
+  id            Int             @id @default(autoincrement())
+  nome          String
+  descricao     String
+  data          DateTime
   participacoes Participacao[] 
 }
 
@@ -39,13 +42,38 @@ model Participacao {
   usuario    Usuario @relation(fields: [usuarioId], references: [id])
   usuarioId  Int
   observacao String?  
+
   @@unique([eventoId, usuarioId])
 }
 
 model Produtos {
   id           Int             @id @default(autoincrement())
   nome         String
-  valor_venda    String
+  valor_venda  String
+
+ 
+  vendas       VendaProduto[]
 }
 
+model Venda {
+  id          Int              @id @default(autoincrement())
+  usuarioId   Int
+  clienteId   Int
+  data        DateTime
+  observacoes String?
 
+  usuario     Usuario          @relation("UsuarioVendedor", fields: [usuarioId], references: [id])
+  cliente     Usuario          @relation("UsuarioCliente", fields: [clienteId], references: [id])
+  produtos    VendaProduto[]
+}
+
+model VendaProduto {
+  id             Int      @id @default(autoincrement())
+  vendaId        Int
+  produtoId      Int
+  quantidade     Int
+  preco_unitario String
+
+  venda          Venda    @relation(fields: [vendaId], references: [id])
+  produto        Produtos @relation(fields: [produtoId], references: [id])
+}

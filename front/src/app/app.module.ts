@@ -18,6 +18,8 @@ import { ListarProdutosComponent } from './components/listar-produtos/listar-pro
 import { EditarCriarProdutoComponent } from './components/editar-criar-produto/editar-criar-produto.component';
 import { ProdutoValorPipe } from './pipes/produto-valor.pipe';
 import { provideNgxMask } from 'ngx-mask';
+import { CriarVendaComponent } from './components/criar-venda/criar-venda.component';
+import { ListarVendaComponent } from './components/listar-venda/listar-venda.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { provideNgxMask } from 'ngx-mask';
     EventoEditarCriarComponent,
     ListarProdutosComponent,
     EditarCriarProdutoComponent,
-    ProdutoValorPipe
+    ProdutoValorPipe,
+    CriarVendaComponent,
+    ListarVendaComponent
       
   ],
   imports: [

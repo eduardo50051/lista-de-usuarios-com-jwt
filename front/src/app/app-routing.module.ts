@@ -10,6 +10,8 @@ import { EventoListarComponent } from './components/evento-listar/evento-listar.
 import { EventoEditarCriarComponent } from './components/evento-editar-criar/evento-editar-criar.component';
 import { ListarProdutosComponent } from './components/listar-produtos/listar-produtos.component';
 import { EditarCriarProdutoComponent } from './components/editar-criar-produto/editar-criar-produto.component';
+import { CriarVendaComponent } from './components/criar-venda/criar-venda.component';
+import { ListarVendaComponent } from './components/listar-venda/listar-venda.component';
 
 const routes: Routes = [
 
@@ -50,6 +52,14 @@ const routes: Routes = [
       {
       path: 'editar-produto/:id',
       component: EditarCriarProdutoComponent
+    },
+       {
+      path: 'editar-venda/:id',
+      component: CriarVendaComponent
+    },
+       {
+      path: 'listar-venda',
+      component: ListarVendaComponent
     },
   ]
 },
