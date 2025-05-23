@@ -37,7 +37,7 @@ export class CadastrarUsuarioComponent {
       const usuarioCriado = await this.usuarioService.criarUsuario(novoUsuario);
       console.log(usuarioCriado);
       
-      this.toastr.success('usuario');
+      this.toastr.success('usuario criado');
       this.router.navigate(['/listar-usuarios']);
     } catch (error: any) {
       

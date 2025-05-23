@@ -36,6 +36,16 @@ export class EventosService {
     return response.data;
   }
 
+
+  async listarEventosPorUsuario(id: number): Promise<IEvento[]>{
+    
+      const response = await this.axiosInstance.get<IEvento[]>(`eventos/usuario/${id}`);
+    
+    return response.data;
+  }
+
+
+
   async listarEventoPorId(id: number): Promise<IEventoDetalhado> {
     const response = await this.axiosInstance.get<IEventoDetalhado>(`eventos/${id}`);
     return response.data;

@@ -147,7 +147,7 @@ async salvarEvento() {
       }))
     });
 
-    alert('Evento atualizado!');
+    this.toastr.success('usuario');
     this.router.navigate(['/listar-eventos']);
   }
 }

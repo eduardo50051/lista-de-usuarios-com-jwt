@@ -9,7 +9,7 @@
       "
     >
       <div>
-        <h5>Bem-vindo</h5>
+        <h5>Bem-vindo {{ nomeUsuario }}</h5>
       </div>
 
       <div>
@@ -22,10 +22,24 @@
             </a>
           </li>
 
-          <li>
+          <li *ngIf="tipoUsuario === 'adm'">
             <a [routerLink]="['/listar-usuarios']">
               <i class="fa fa-list-ul"></i>
-              <p>Lista</p>
+              <p>Lista usuarios</p>
+            </a>
+          </li>
+
+          <li>
+            <a [routerLink]="['/listar-produtos']">
+              <i class="fa fa-list-ul"></i>
+              <p>Produtos</p>
+            </a>
+          </li>
+
+          <li>
+            <a [routerLink]="['/editar-produto/0']">
+              <i class="fa fa-list-ul"></i>
+              <p>Cadastrar Produtos</p>
             </a>
           </li>
 
@@ -36,7 +50,7 @@
             </a>
           </li>
 
-          <li>
+          <li *ngIf="tipoUsuario === 'adm'">
             <a [routerLink]="['/editar-evento/0']">
               <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
               <p>Cadastrar Evento</p>

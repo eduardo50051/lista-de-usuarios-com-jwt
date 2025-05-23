@@ -19,6 +19,11 @@ export class EventosController {
     return this.eventosService.listarTodos();
   }
 
+  @Get('usuario/:id')
+  async listarEventos(@Param('id') id: string) {
+    return this.eventosService.listarEventosPorUsuario(Number(id));
+  }
+
   @Get(':id')
   buscar(@Param('id') id: string) {
     return this.eventosService.buscarPorId(+id);

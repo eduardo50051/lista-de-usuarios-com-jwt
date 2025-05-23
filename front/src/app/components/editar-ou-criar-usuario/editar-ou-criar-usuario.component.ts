@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from 'src/app/interfaces/IUsuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './editar-ou-criar-usuario.component.html',
   styleUrls: ['./editar-ou-criar-usuario.component.scss']
 })
-export class EditarOuCriarUsuarioComponent {
+export class EditarOuCriarUsuarioComponent implements OnInit{
 
 
 

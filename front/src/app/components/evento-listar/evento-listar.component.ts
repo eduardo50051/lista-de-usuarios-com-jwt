@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventosService } from 'src/app/services/eventos.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { IEvento } from 'src/app/interfaces/IEvento';
 
 declare var bootstrap: any;
@@ -12,12 +13,15 @@ declare var bootstrap: any;
 export class EventoListarComponent implements OnInit {
   eventos: IEvento[] = [];
 
+tipoUsuario: string | null = null;
+
   private modalInstance: any;
   participantesModal: any[] = [];
-  constructor(private eventosService: EventosService) {}
+  constructor(private eventosService: EventosService, private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
     this.carregarEventos();
+    this.tipoUsuario = this.usuarioService.usuarioTipo();
   }
 
 async carregarEventos(): Promise<void> {

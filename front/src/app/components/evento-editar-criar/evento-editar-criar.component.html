@@ -60,29 +60,33 @@
     </div>
   </div>
 
-  <div class="text-end mt-4">
-    <button
-      *ngIf="evento && evento.id >= 1"
-      (click)="salvarEvento()"
-      class="btn btn-primary"
-    >
-      Salvar
-    </button>
+  <div class="text-end mt-4 d-flex justify-content-between">
+    <div>
+      <button
+        *ngIf="evento?.id === 0"
+        class="btn btn-success"
+        (click)="criarEvento()"
+      >
+        Criar
+      </button>
 
-    <button
-      *ngIf="evento && evento.id >= 1"
-      (click)="excluirEvento()"
-      class="btn btn-danger"
-    >
-      Excluir
-    </button>
+      <button
+        *ngIf="evento && evento.id >= 1"
+        (click)="salvarEvento()"
+        class="btn btn-primary"
+      >
+        Salvar
+      </button>
+    </div>
 
-    <button
-      *ngIf="evento?.id === 0"
-      class="btn btn-success"
-      (click)="criarEvento()"
-    >
-      Criar
-    </button>
+    <div>
+      <button
+        *ngIf="evento && evento.id >= 1"
+        (click)="excluirEvento()"
+        class="btn btn-danger"
+      >
+        Excluir
+      </button>
+    </div>
   </div>
 </div>

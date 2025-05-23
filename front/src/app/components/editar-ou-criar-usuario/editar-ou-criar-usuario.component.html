@@ -41,7 +41,7 @@
           />
         </div>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="criado_em" class="form-label">Usuário criado em</label>
           <input
             type="text"
@@ -50,14 +50,12 @@
             [value]="usuario.criado_em | date : 'short'"
             disabled
           />
-        </div>
+        </div> -->
       </form>
     </div>
 
-  
     <div class="card-footer d-flex justify-content-between">
       <div>
-       
         <button
           (click)="atualizarUsuario()"
           type="button"
@@ -65,7 +63,7 @@
         >
           <i class="fa fa-save"></i> Gravar
         </button>
-    
+
         <button
           [routerLink]="['/listar-usuarios']"
           type="button"
@@ -74,17 +72,10 @@
           <i class="fa fa-arrow-left"></i> Voltar
         </button>
       </div>
-    
- 
-      <button
-        (click)="deletarUsuario()"
-        type="button"
-        class="btn btn-danger"
-      >
+
+      <button (click)="deletarUsuario()" type="button" class="btn btn-danger">
         <i class="fa fa-trash"></i> Excluir
       </button>
     </div>
-    
-    
   </div>
 </div>

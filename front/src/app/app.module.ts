@@ -14,6 +14,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
 import { EventoEditarCriarComponent } from './components/evento-editar-criar/evento-editar-criar.component';
+import { ListarProdutosComponent } from './components/listar-produtos/listar-produtos.component';
+import { EditarCriarProdutoComponent } from './components/editar-criar-produto/editar-criar-produto.component';
+import { ProdutoValorPipe } from './pipes/produto-valor.pipe';
+import { provideNgxMask } from 'ngx-mask';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +30,11 @@ import { EventoEditarCriarComponent } from './components/evento-editar-criar/eve
     PaginaGeralComponent,
     HomeComponent,
     EventoListarComponent,
-    EventoEditarCriarComponent
+    EventoEditarCriarComponent,
+    ListarProdutosComponent,
+    EditarCriarProdutoComponent,
+    ProdutoValorPipe
+      
   ],
   imports: [
     BrowserModule,
@@ -36,8 +45,9 @@ import { EventoEditarCriarComponent } from './components/evento-editar-criar/eve
       positionClass: 'toast-top-right',
       timeOut: 3000,
     }),
+    
   ],
-  providers: [],
+  providers: [ provideNgxMask(), ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

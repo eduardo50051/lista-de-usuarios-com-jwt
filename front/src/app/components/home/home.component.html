@@ -1,1 +1,18 @@
-<p>home works!</p>
+<h1>Eventos em que esta participando</h1>
+
+<table id="tabelaEventosUsuario" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Descricao</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let evento of eventosUsuario">
+      <td>{{ evento.nome }}</td>
+      <td>{{ evento.descricao || "adicione seu nome" }}</td>
+      <td>{{ evento.data | date : "short" }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -42,3 +42,10 @@ model Participacao {
   @@unique([eventoId, usuarioId])
 }
 
+model Produtos {
+  id           Int             @id @default(autoincrement())
+  nome         String
+  valor_venda    String
+}
+
+

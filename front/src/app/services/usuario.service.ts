@@ -29,6 +29,15 @@ export class UsuarioService {
         localStorage.setItem('token', token);
         this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       }
+
+     const dadosUsuario = response.data.usuario;
+
+if (dadosUsuario) {
+  localStorage.setItem('usuario', JSON.stringify(dadosUsuario));
+}
+
+
+
     } catch (error:any) {
       if (error.response) {
        
@@ -85,7 +94,20 @@ export class UsuarioService {
 
 
 
- 
+ usuarioTipo(): string | null {
+  const usuario = localStorage.getItem('usuario');
+  return usuario ? JSON.parse(usuario).tipo : null;
+}
+
+ usuarioNome(): string | null {
+  const usuario = localStorage.getItem('usuario');
+  return usuario ? JSON.parse(usuario).nome : null;
+}
+
+ usuarioId(): number | null {
+  const usuario = localStorage.getItem('usuario');
+  return usuario ? JSON.parse(usuario).id : null;
+}
 
   async atualizarUsuario(id: number, usuario: IUsuario): Promise<void> {
     try {
@@ -108,6 +130,7 @@ export class UsuarioService {
   
   Sair(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
     delete this.axiosInstance.defaults.headers.common['Authorization'];
   }
 
