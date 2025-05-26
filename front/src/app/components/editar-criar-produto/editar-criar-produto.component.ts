@@ -42,37 +42,38 @@ export class EditarCriarProdutoComponent implements OnInit{
     }
   }
 
-async criarProduto(){
+
+  async criarProduto(){
   if (this.produto){
     const payload = {
       nome: this.produto.nome,
-      valor_venda: this.produto.valor_venda,
+      valor_venda: this.limparValor(this.produto.valor_venda ?? '').toString(), 
 
     }
-  
 
-
-try {
-  await this.produtoService.criarProduto(payload);
-  this.toastr.success('produto criado');
-    this.router.navigate(['listar-produtos']);
-} catch (error: any) {
-  console.error(error);
-  this.toastr.error('erro ao cadastrar produto')
-}
-
-}
-}
-
-
-  async salvarProduto(){
-    await this.produtoService.atualizarProduto(this.produto.id!,{
-      nome: this.produto.nome,
-      valor_venda: this.produto.valor_venda,
-    });
-    this.toastr.success('Produto atualizado com sucesso');
-    this.router.navigate(['listar-produtos']);
+    try {
+      await this.produtoService.criarProduto(payload);
+      this.toastr.success('produto criado');
+      this.router.navigate(['listar-produtos']);
+    } catch (error: any) {
+      console.error(error);
+      this.toastr.error('erro ao cadastrar produto')
+    }
   }
+}
+
+
+async salvarProduto(){
+  await this.produtoService.atualizarProduto(this.produto.id!, {
+    nome: this.produto.nome,
+    valor_venda: this.limparValor(this.produto.valor_venda ?? '').toString(), 
+  });
+
+  this.toastr.success('Produto atualizado com sucesso');
+  this.router.navigate(['listar-produtos']);
+}
+
+
 
 
 
@@ -110,5 +111,20 @@ try {
     }
 
   }
+
+
+
+  private limparValor(valor: string): number {
+  if (!valor) return 0;
+
+  return parseFloat(
+    valor
+      .replace(/\s/g, '')    
+      .replace('R$', '')      
+      .replace(/\./g, '')     
+      .replace(',', '.')      
+  );
+}
+
 
 }

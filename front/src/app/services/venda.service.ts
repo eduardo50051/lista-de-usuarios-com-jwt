@@ -52,7 +52,7 @@ export class VendaService {
 
   async atualizarVenda(id: number, venda: IVenda): Promise<IVenda> {
     try {
-      const response = await this.axiosInstance.put(`/venda${id}`, venda);
+      const response = await this.axiosInstance.put(`/venda/${id}`, venda);
       return response.data;
     } catch (error) {
       console.error(error);

@@ -26,7 +26,11 @@
             [(ngModel)]="produto.valor_venda"
             name="valor_venda"
             placeholder="Digite o valor de venda"
-            mask="(00) 00000-0000"
+            mask="separator.2"
+            prefix="R$ "
+            thousandSeparator="."
+            decimalMarker=","
+            [dropSpecialCharacters]="false"
           />
         </div>
       </form>

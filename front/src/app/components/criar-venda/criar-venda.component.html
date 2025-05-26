@@ -1,1 +1,146 @@
-<p>criar-venda works!</p>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h5 *ngIf="vendaId === 0" class="card-title">Nova Venda</h5>
+      <h5 *ngIf="vendaId != 0" class="card-title">Venda #{{ venda.id }}</h5>
+      <div class="d-flex justify-content-between">
+        <div class="col-3 form-group">
+          <label>Usuário</label>
+          <select class="form-select" [(ngModel)]="venda.usuarioId">
+            <option
+              *ngFor="let usuario of usuariosVendedores"
+              [value]="usuario.id"
+            >
+              {{ usuario.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-3 form-group">
+          <label>Data da Venda</label>
+          <input type="date" class="form-control" [(ngModel)]="venda.data" />
+        </div>
+
+        <div class="col-3 form-group">
+          <label>Cliente</label>
+          <select class="form-select" [(ngModel)]="venda.clienteId">
+            <option
+              *ngFor="let cliente of usuariosClientes"
+              [value]="cliente.id"
+            >
+              {{ cliente.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-6 form-group">
+        <label>Observações</label>
+        <textarea
+          class="form-control"
+          style="height: 150px"
+          [(ngModel)]="venda.observacoes"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Adicionar Produto</h5>
+      <div class="form-row d-flex justify-content-between gap-10">
+        <div class="form-group col-md-4">
+          <label>Produto</label>
+          <select
+            class="form-control"
+            [(ngModel)]="produtoSelecionado.produtoId"
+          >
+            <option [ngValue]="null" disabled selected>
+              Escolha um produto
+            </option>
+            <option *ngFor="let produto of produtos" [ngValue]="produto.id">
+              {{ produto.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-1">
+          <label>Quantidade</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="produtoSelecionado.quantidade"
+          />
+        </div>
+
+        <div class="form-group col-md-1">
+          <label>Preço</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="produtoSelecionado.preco_unitario"
+          />
+        </div>
+
+        <div class="form-group col-md-2 d-flex align-items-end">
+          <button class="btn btn-primary w-100" (click)="inserirProduto()">
+            {{ editandoProdutoIndex === -1 ? "Inserir" : "Atualizar" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-4" *ngIf="venda.produtos.length > 0">
+    <div class="card-body">
+      <h5 class="card-title">Produtos na Venda</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of venda.produtos; let i = index">
+            <td>{{ getNomeProduto(p.produtoId!) }}</td>
+            <td>{{ p.quantidade }}</td>
+            <td>{{ p.preco_unitario | currency : "BRL" }}</td>
+            <td>{{ calcularTotalProduto(p) | currency : "BRL" }}</td>
+            <td class="d-flex justify-content-around">
+              <button
+                class="btn btn-sm btn-warning mr-2"
+                (click)="editarProduto(i)"
+              >
+                Editar
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="removerProduto(i)">
+                Remover
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex">
+    <button
+      *ngIf="vendaId != 0"
+      class="btn btn-success"
+      (click)="atualizarVenda()"
+    >
+      Gravar
+    </button>
+    <button
+      *ngIf="vendaId === 0"
+      class="btn btn-success"
+      (click)="criarVenda()"
+    >
+      Novo
+    </button>
+  </div>
+</div>

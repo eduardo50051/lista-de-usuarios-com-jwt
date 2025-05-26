@@ -10,7 +10,7 @@
 
           <h5 class="card-title">{{ produto.nome }}</h5>
           <p class="card-text flex-grow-1">
-            {{ produto.valor_venda! | produtoValor }}
+            {{ produto.valor_venda! | currency : "BRL" }}
           </p>
 
           <div class="mt-auto d-flex justify-content-between">

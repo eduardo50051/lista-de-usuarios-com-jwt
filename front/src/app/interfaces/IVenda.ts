@@ -1,6 +1,6 @@
 export interface IProdutoVenda {
   id?: number; 
-  produtoId: number;
+  produtoId: number | null;
   quantidade: number;
   preco_unitario?: string;
   produto?: {
@@ -12,8 +12,8 @@ export interface IProdutoVenda {
 
 export interface IVenda {
   id?: number;
-  usuarioId: number;
-  clienteId: number;
+  usuarioId: number | null;
+  clienteId: number | null;
   data: string | Date;
   observacoes?: string;
   produtos: IProdutoVenda[];

@@ -17,7 +17,7 @@ import { EventoEditarCriarComponent } from './components/evento-editar-criar/eve
 import { ListarProdutosComponent } from './components/listar-produtos/listar-produtos.component';
 import { EditarCriarProdutoComponent } from './components/editar-criar-produto/editar-criar-produto.component';
 import { ProdutoValorPipe } from './pipes/produto-valor.pipe';
-import { provideNgxMask } from 'ngx-mask';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CriarVendaComponent } from './components/criar-venda/criar-venda.component';
 import { ListarVendaComponent } from './components/listar-venda/listar-venda.component';
 
@@ -49,9 +49,9 @@ import { ListarVendaComponent } from './components/listar-venda/listar-venda.com
       positionClass: 'toast-top-right',
       timeOut: 3000,
     }),
-    
+     NgxMaskDirective,
   ],
-  providers: [ provideNgxMask(), ],
+  providers: [provideNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,7 +11,8 @@ export class VendaService {
 
 
   async listarVendas() {
-    return this.prisma.venda.findMany({
+    
+     const venda = await this.prisma.venda.findMany({
       include: {
         usuario: true,
         cliente: true,
@@ -20,6 +21,10 @@ export class VendaService {
         },
       },
     });
+ console.log(JSON.stringify(venda, null, 2));
+return venda;
+
+     
   }
 
   async listarVendasPorId(id: number) {
@@ -35,30 +40,35 @@ export class VendaService {
     });
   }
 
-  async criarVenda(data: VendaDto) {
-  const produtosIds = data.produtos.map(p => p.produtoId);
+
+async criarVenda(data: VendaDto) {
+ 
+  const produtosIds = data.produtos.map(p => Number(p.produtoId));
+  
   const produtosDB = await this.prisma.produtos.findMany({
     where: { id: { in: produtosIds } },
   });
+
   const precosMap = new Map<number, string>();
   produtosDB.forEach(p => precosMap.set(p.id, p.valor_venda));
 
   const produtosParaCriar = data.produtos.map(produto => {
-    const preco = produto.preco_unitario ?? precosMap.get(produto.produtoId);
+    const produtoId = Number(produto.produtoId); 
+    const preco = produto.preco_unitario ?? precosMap.get(produtoId);
     if (!preco) {
-      throw new Error(`Preço não encontrado para o produto ${produto.produtoId}`);
+      throw new Error(`Preço não encontrado para o produto ${produtoId}`);
     }
     return {
       quantidade: produto.quantidade,
       preco_unitario: preco,
-      produto: { connect: { id: produto.produtoId } },
+      produto: { connect: { id: produtoId } },
     };
   });
 
   return this.prisma.venda.create({
     data: {
-      usuarioId: data.usuarioId,
-      clienteId: data.clienteId,
+      usuarioId: Number(data.usuarioId),   
+      clienteId: Number(data.clienteId),   
       data: new Date(data.data),
       observacoes: data.observacoes,
       produtos: {
@@ -74,6 +84,8 @@ export class VendaService {
     },
   });
 }
+
+
 
 
   async atualizarVenda(id: number, data: Partial<VendaDto>) {

@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-4 mb-4" *ngFor="let venda of vendas">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Venda #{{ venda.id }}</h5>
+
+        <p class="mb-1"><strong>Vendedor:</strong> {{ venda.usuario?.nome }}</p>
+        <p class="mb-1"><strong>Cliente:</strong> {{ venda.cliente?.nome }}</p>
+        <p class="mb-1">
+          <strong>Data da Venda:</strong> {{ venda.data | date : "dd/MM/yyyy" }}
+        </p>
+        <p class="mb-3">
+          <strong>Observações:</strong> {{ venda.observacoes }}
+        </p>
+
+        <h6 class="card-subtitle mb-2 text-muted">Produtos:</h6>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let item of venda.produtos">
+            <strong>Nome:</strong> {{ item.produto?.nome }} |
+            <strong>Quantidade:</strong> {{ item.quantidade }} |
+
+            {{ item.preco_unitario | currency : "BRL" }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
