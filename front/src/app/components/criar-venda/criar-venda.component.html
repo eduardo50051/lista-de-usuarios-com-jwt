@@ -7,6 +7,7 @@
         <div class="col-3 form-group">
           <label>Usuário</label>
           <select class="form-select" [(ngModel)]="venda.usuarioId">
+            <option [value]="0">Escolha o seu vendedor</option>
             <option
               *ngFor="let usuario of usuariosVendedores"
               [value]="usuario.id"
@@ -24,6 +25,7 @@
         <div class="col-3 form-group">
           <label>Cliente</label>
           <select class="form-select" [(ngModel)]="venda.clienteId">
+            <option [value]="0">Escolha o cliente cadastrado</option>
             <option
               *ngFor="let cliente of usuariosClientes"
               [value]="cliente.id"
@@ -115,10 +117,10 @@
                 class="btn btn-sm btn-warning mr-2"
                 (click)="editarProduto(i)"
               >
-                Editar
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
               <button class="btn btn-sm btn-danger" (click)="removerProduto(i)">
-                Remover
+                <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             </td>
           </tr>

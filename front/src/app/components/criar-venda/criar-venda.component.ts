@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IUsuario } from 'src/app/interfaces/IUsuario';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { IVenda } from 'src/app/interfaces/IVenda';
 import { IProdutoVenda } from 'src/app/interfaces/IVenda';
 import { VendaService } from 'src/app/services/venda.service';
 import { IProduto } from 'src/app/interfaces/IProdutos';
 import { ProdutosService } from 'src/app/services/produtos.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-criar-venda',
@@ -40,7 +40,9 @@ editandoProdutoIndex: number = -1;
     private usuarioService: UsuarioService, 
     private vendaService: VendaService, 
     private route: ActivatedRoute, 
-    private produtoService:ProdutosService
+    private produtoService:ProdutosService,
+    private toastr: ToastrService,
+    private router: Router,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -94,13 +96,35 @@ async listarProdutos(): Promise<void> {
 
 
 
+formatarComoMoeda(valor: string): void {
+ 
+  const somenteNumeros = valor.replace(/\D/g, '');
+
+  if (somenteNumeros.length === 0) {
+    this.produtoSelecionado.preco_unitario = '';
+    return;
+  }
+
+ 
+  const valorNumerico = (parseInt(somenteNumeros, 10) / 100).toFixed(2);
+
+ 
+  const valorFormatado = parseFloat(valorNumerico).toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2
+  });
+
+
+  this.produtoSelecionado.preco_unitario = valorFormatado;
+}
 
 
 
 
 inserirProduto(): void {
   if (!this.produtoSelecionado.produtoId || !this.produtoSelecionado.quantidade) {
-    alert('Preencha o produto e a quantidade!');
+        this.toastr.error('escolha um produto');
     return;
   }
 
@@ -110,7 +134,7 @@ inserirProduto(): void {
     if (produto && produto.valor_venda) {
       this.produtoSelecionado.preco_unitario = produto.valor_venda;
     } else {
-      alert('Produto não encontrado ou valor de venda inválido.');
+      this.toastr.error('produto nao encontrado');
       return;
     }
   }
@@ -151,9 +175,8 @@ calcularTotalProduto(produto: IProdutoVenda): number {
 async criarVenda(): Promise<void> {
   try {
     await this.vendaService.criarVenda(this.venda);
-    alert('Venda criada com sucesso!');
-    
-  
+    this.toastr.success('venda criada');
+  this.router.navigate(['/listar-venda']);
     this.venda = {
       usuarioId: null,
       clienteId: null,
@@ -165,8 +188,8 @@ async criarVenda(): Promise<void> {
     this.editandoProdutoIndex = -1;
     
   } catch (error) {
-    console.error('Erro ao criar venda:', error);
-    
+   this.toastr.error('erro ao gerar a venda');
+    console.log(error)
   }
 }
 
@@ -186,7 +209,7 @@ async atualizarVenda(): Promise<void> {
   
     await this.vendaService.atualizarVenda(this.venda.id!, this.venda); 
     alert('Venda atualizada com sucesso!');
-
+this.router.navigate(['/listar-venda']);
     this.venda = {
       usuarioId: null,
       clienteId: null,

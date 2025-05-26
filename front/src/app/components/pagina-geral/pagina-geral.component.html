@@ -24,35 +24,35 @@
 
           <li *ngIf="tipoUsuario === 'adm'">
             <a [routerLink]="['/listar-usuarios']">
-              <i class="fa fa-list-ul"></i>
+              <i class="fa fa-users" aria-hidden="true"></i>
               <p>Lista usuarios</p>
             </a>
           </li>
 
           <li>
             <a [routerLink]="['/listar-venda']">
-              <i class="fa fa-list-ul"></i>
-              <p>vendas</p>
+              <i class="fa fa-handshake-o" aria-hidden="true"></i>
+              <p>Vendas</p>
             </a>
           </li>
 
           <li>
             <a [routerLink]="['/editar-venda/0']">
-              <i class="fa fa-list-ul"></i>
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
               <p>cadastrar vendas</p>
             </a>
           </li>
 
           <li>
             <a [routerLink]="['/listar-produtos']">
-              <i class="fa fa-list-ul"></i>
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               <p>Produtos</p>
             </a>
           </li>
 
           <li>
             <a [routerLink]="['/editar-produto/0']">
-              <i class="fa fa-list-ul"></i>
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
               <p>Cadastrar Produtos</p>
             </a>
           </li>

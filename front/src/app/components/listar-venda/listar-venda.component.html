@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-4 mb-4" *ngFor="let venda of vendas">
-    <div class="card h-100 shadow-sm">
+    <div style="position: relative" class="card h-100 shadow-sm">
       <div class="card-body">
         <h5 class="card-title">Venda #{{ venda.id }}</h5>
 
@@ -22,6 +22,25 @@
             {{ item.preco_unitario | currency : "BRL" }}
           </li>
         </ul>
+      </div>
+      <div
+        [routerLink]="['/editar-venda/', venda.id]"
+        style="
+          cursor: pointer;
+          position: absolute;
+          left: 96%;
+          top: -4%;
+          background: #cbcbd9;
+          width: 30px;
+          border-radius: 20px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+        class="btn_editar_venda"
+      >
+        <i class="fa fa-pencil" aria-hidden="true"></i>
       </div>
     </div>
   </div>

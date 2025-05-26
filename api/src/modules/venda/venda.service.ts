@@ -89,23 +89,76 @@ async criarVenda(data: VendaDto) {
 
 
   async atualizarVenda(id: number, data: Partial<VendaDto>) {
-    return this.prisma.venda.update({
-      where: { id },
-      data: {
-        usuarioId: data.usuarioId,
-        clienteId: data.clienteId,
-        data: data.data ? new Date(data.data) : undefined,
-        observacoes: data.observacoes,
-      },
-      include: {
-        produtos: {
-          include: { produto: true },
-        },
-        usuario: true,
-        cliente: true,
-      },
+  
+  await this.prisma.venda.update({
+    where: { id },
+    data: {
+      usuarioId: data.usuarioId,
+      clienteId: data.clienteId,
+      data: data.data ? new Date(data.data) : undefined,
+      observacoes: data.observacoes,
+    }
+  });
+
+ 
+  const produtosAtuais = await this.prisma.vendaProduto.findMany({
+    where: { vendaId: id }
+  });
+
+  const idsAtuais = produtosAtuais.map(p => p.id);
+  const produtosEnviados = data.produtos ?? [];
+
+  const idsEnviados = produtosEnviados
+    .filter(p => p.id !== undefined && p.id !== null)
+    .map(p => p.id);
+
+ 
+  const idsParaDeletar = idsAtuais.filter(idAtual => !idsEnviados.includes(idAtual));
+
+  if (idsParaDeletar.length > 0) {
+    await this.prisma.vendaProduto.deleteMany({
+      where: { id: { in: idsParaDeletar } }
     });
   }
+
+  
+  for (const produto of produtosEnviados) {
+    if (produto.id) {
+    
+      await this.prisma.vendaProduto.update({
+        where: { id: produto.id },
+        data: {
+          produtoId: produto.produtoId,
+          quantidade: produto.quantidade,
+          preco_unitario: produto.preco_unitario,
+        }
+      });
+    } else {
+      
+      await this.prisma.vendaProduto.create({
+        data: {
+          vendaId: id,
+          produtoId: produto.produtoId,
+          quantidade: produto.quantidade,
+          preco_unitario: produto.preco_unitario ?? '',
+        }
+      });
+    }
+  }
+
+
+  return this.prisma.venda.findUnique({
+    where: { id },
+    include: {
+      produtos: {
+        include: { produto: true }
+      },
+      usuario: true,
+      cliente: true,
+    }
+  });
+}
+
 
   async apagarVenda(id: number) {
     return this.prisma.venda.delete({
